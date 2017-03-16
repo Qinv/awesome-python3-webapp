@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #coding=utf-8
 from bs4 import __author__
 #2017.03.02
@@ -194,24 +195,8 @@ class Model(dict,metaclass=ModelMetaclass):
         return cls(**rs[0])    
     
     @classmethod  
-    @asyncio.coroutine  
-    def findAll(cls, **kw):  
-        rs = []  
-        if len(kw) == 0:  
-            rs = yield from select(cls.__select__, None)  
-        else:  
-            args=[]  
-            values=[]  
-            for k, v in kw.items():  
-                args.append('%s=?' % k )  
-                values.append(v)  
-            #print('%s where %s ' % (cls.__select__,  ' and '.join(args)), values)  
-            rs = yield from select('%s where %s ' % (cls.__select__,  ' and '.join(args)), values)  
-        return rs    
-    
-    @classmethod  
     @asyncio.coroutine
-    def find_all(cls, where=None, args=None, **kw):  
+    def findAll(cls, where=None, args=None, **kw):  
         sql = [cls.__select__]  
         if where:  
             sql.append('where')  
@@ -291,7 +276,7 @@ if __name__=="__main__":#一个类自带前后都有双下划线的方法，在�
     #创建实例  
     @asyncio.coroutine  
     def test():  
-        yield from create_pool(loop=loop, host='localhost', port=3306, user='root', password='220016', db='test')  
+        yield from create_pool(loop=loop, host='localhost', port=3306, user='root', password='220016', db='awesome')  
         user = User(id=4, name='Qinv', email='595930255@qq.com', password='qinwei')  
         #r = yield from User2.findAll()  
         #print(r)  

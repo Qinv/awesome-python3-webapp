@@ -1,10 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 import time, uuid
 import orm
 from orm import Model, StringField, BooleanField, FloatField, TextField
 import asyncio, os, json, time
 import aiomysql
 
-#根据当前时间来生成id
+#鏍规嵁褰撳墠鏃堕棿鐢熸垚id
 def next_id():
     return '%015d%s000' % (int(time.time() * 1000), uuid.uuid4().hex)
 
@@ -43,19 +45,19 @@ class Comment(Model):
     created_at = FloatField(default=time.time)
 
 
-#测试代码
-#一处异步，处处异步    
-@asyncio.coroutine   
-def test():
-    yield from orm.create_pool(loop=loop, host='localhost', port=3306, user='root', password='220016', db='awesome')
-    print('!!!!!!zheli????/')
-    u = User(name='xiaoming', email='12345@example.com', passwd='1234', image='image')
-    yield from u.save()
-    yield from orm.destroy_pool()
+  
+if __name__=="__main__":
+    @asyncio.coroutine   
+    def test():
+        yield from orm.create_pool(loop=loop, host='localhost', port=3306, user='root', password='220016', db='awesome')
+        print('!!!!!!zheli????/')
+        u = User(name='xiaoming', email='12345@example.com', passwd='1234', image='image')
+        yield from u.save()
+        yield from orm.destroy_pool()
 
-loop = asyncio.get_event_loop()
+        loop = asyncio.get_event_loop()
 
-loop.run_until_complete(test())
+        loop.run_until_complete(test())
 
-loop.close()
+        loop.close()
 
